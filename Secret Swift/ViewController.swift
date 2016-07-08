@@ -7,10 +7,22 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class ViewController: UIViewController {
+    // View to display the secret text.
     @IBOutlet weak var secret: UITextView!
+    // Authentication button for the secret text.
+    @IBOutlet weak var authentication: UIButton!
 
+    /*
+     * Function Name: viewDidLoad
+     * Parameters: None
+     * Purpose: This method creates observers for some of the things that will occur while the app is running
+     *   and sets the initial title for the app.
+     * Return Value: None
+     */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -44,7 +56,9 @@ class ViewController: UIViewController {
         
         if notification.name == UIKeyboardWillHideNotification {
             secret.contentInset = UIEdgeInsetsZero
-        } else {
+        }
+        
+        else {
             secret.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
         }
         
@@ -63,6 +77,7 @@ class ViewController: UIViewController {
     
     func unlockSecretMessage() {
         secret.hidden = false
+        authentication.hidden = true
         title = "Secret stuff!"
         
         if let text = KeychainWrapper.stringForKey("SecretMessage") {
@@ -82,12 +97,57 @@ class ViewController: UIViewController {
             KeychainWrapper.setString(secret.text, forKey: "SecretMessage")
             secret.resignFirstResponder()
             secret.hidden = true
+            authentication.hidden = false
             title = "Nothing to see here"
         }
     }
     
+    /*
+     * Function Name: authenticateUser
+     * Parameters: sender - the button pressed to call this method.
+     * Purpose: This method confirms that TouchID is usable on the device and asks the user to use it to
+     *   authenticate themselves. Any errors that occur are displayed to the user in an alert view controller.
+     * Return Value: None
+     */
+    
     @IBAction func authenticateUser(sender: AnyObject) {
-        unlockSecretMessage()
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "Identify yourself!"
+            
+            context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
+                [unowned self] (success: Bool, authenticationError: NSError?) -> Void in
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    if success {
+                        self.unlockSecretMessage()
+                    }
+                    
+                    else {
+                        if let error = authenticationError {
+                            if error.code == LAError.UserFallback.rawValue {
+                                let ac = UIAlertController(title: "Passcode? Ha!", message: "It's Touch ID or nothing – sorry!", preferredStyle: .Alert)
+                                ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                                self.presentViewController(ac, animated: true, completion: nil)
+                                return
+                            }
+                        }
+                        
+                        let ac = UIAlertController(title: "Authentication failed", message: "Your fingerprint could not be verified; please try again.", preferredStyle: .Alert)
+                        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                        self.presentViewController(ac, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+        
+        else {
+            let ac = UIAlertController(title: "Touch ID not available", message: "Your device is not configured for Touch ID.", preferredStyle: .Alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(ac, animated: true, completion: nil)
+        }
     }
 
 }

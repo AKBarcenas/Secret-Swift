@@ -23,17 +23,27 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2U-49-1Lx">
+                                <rect key="frame" x="256" y="317" width="88" height="30"/>
+                                <state key="normal" title="Authenticate"/>
+                                <connections>
+                                    <action selector="authenticateUser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="df6-me-KC1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="yRK-GA-tj3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="0yr-Sy-evG"/>
                             <constraint firstAttribute="trailing" secondItem="yRK-GA-tj3" secondAttribute="trailing" id="2BQ-wY-BiI"/>
+                            <constraint firstItem="h2U-49-1Lx" firstAttribute="centerY" secondItem="yRK-GA-tj3" secondAttribute="centerY" id="TNb-NV-Ugp"/>
                             <constraint firstItem="yRK-GA-tj3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="WqT-Z4-Cjg"/>
                             <constraint firstItem="yRK-GA-tj3" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="ZZF-1C-Wvv"/>
+                            <constraint firstItem="h2U-49-1Lx" firstAttribute="centerX" secondItem="yRK-GA-tj3" secondAttribute="centerX" id="kH9-rK-qWB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ixL-33-es0"/>
                     <connections>
+                        <outlet property="authentication" destination="h2U-49-1Lx" id="hDg-MB-f5i"/>
                         <outlet property="secret" destination="yRK-GA-tj3" id="smN-aG-S80"/>
                     </connections>
                 </viewController>
