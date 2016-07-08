@@ -12,6 +12,7 @@
 		FA1919481D2FAF3A00039D67 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA1919461D2FAF3A00039D67 /* Main.storyboard */; };
 		FA19194A1D2FAF3A00039D67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA1919491D2FAF3A00039D67 /* Assets.xcassets */; };
 		FA19194D1D2FAF3A00039D67 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA19194B1D2FAF3A00039D67 /* LaunchScreen.storyboard */; };
+		FA1919551D2FEDAC00039D67 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1919541D2FEDAC00039D67 /* KeychainWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		FA1919491D2FAF3A00039D67 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA19194C1D2FAF3A00039D67 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA19194E1D2FAF3A00039D67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA1919541D2FEDAC00039D67 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				FA1919421D2FAF3A00039D67 /* AppDelegate.swift */,
 				FA1919441D2FAF3A00039D67 /* ViewController.swift */,
 				FA1919461D2FAF3A00039D67 /* Main.storyboard */,
+				FA1919541D2FEDAC00039D67 /* KeychainWrapper.swift */,
 				FA1919491D2FAF3A00039D67 /* Assets.xcassets */,
 				FA19194B1D2FAF3A00039D67 /* LaunchScreen.storyboard */,
 				FA19194E1D2FAF3A00039D67 /* Info.plist */,
@@ -136,6 +139,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA1919551D2FEDAC00039D67 /* KeychainWrapper.swift in Sources */,
 				FA1919451D2FAF3A00039D67 /* ViewController.swift in Sources */,
 				FA1919431D2FAF3A00039D67 /* AppDelegate.swift in Sources */,
 			);

@@ -18,6 +18,10 @@ class ViewController: UIViewController {
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIKeyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        
+        title = "Nothing to see here"
+        
+        notificationCenter.addObserver(self, selector: #selector(saveSecretMessage), name: UIApplicationWillResignActiveNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,6 +52,42 @@ class ViewController: UIViewController {
         
         let selectedRange = secret.selectedRange
         secret.scrollRangeToVisible(selectedRange)
+    }
+    
+    /*
+     * Function Name: unlockSecretMessage
+     * Parameters: None
+     * Purpose: This method displays a secret message from the keychain in the text view and changes the title.
+     * Return Value: None
+     */
+    
+    func unlockSecretMessage() {
+        secret.hidden = false
+        title = "Secret stuff!"
+        
+        if let text = KeychainWrapper.stringForKey("SecretMessage") {
+            secret.text = text
+        }
+    }
+    
+    /*
+     * Function Name: saveSecretMessage
+     * Parameters: None
+     * Purpose: This method saves a new secret message to the keychain and hides the text view.
+     * Return Value: None
+     */
+    
+    func saveSecretMessage() {
+        if !secret.hidden {
+            KeychainWrapper.setString(secret.text, forKey: "SecretMessage")
+            secret.resignFirstResponder()
+            secret.hidden = true
+            title = "Nothing to see here"
+        }
+    }
+    
+    @IBAction func authenticateUser(sender: AnyObject) {
+        unlockSecretMessage()
     }
 
 }
